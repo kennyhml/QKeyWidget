@@ -9,7 +9,6 @@ class KeybindSettingWindow(QWidget):
         super().__init__()
 
         layout = QVBoxLayout()
-
         key_widget = QKeyWidget()
         key_widget.setToolTip("Manually created")
 
