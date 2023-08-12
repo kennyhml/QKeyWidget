@@ -32,6 +32,11 @@ def stringifyCombination(modifiers: list[str], key: str) -> str:
     stringify_combination(["Shift"], "Shift")
     >>> "Shift"
     """
+
+    key = toSymbol(key)
+    for i in range(len(modifiers)):
+        modifiers[i] = toSymbol(modifiers[i])
+
     if key in modifiers:
         modifiers.remove(key)
 
@@ -43,3 +48,23 @@ def stringifyCombination(modifiers: list[str], key: str) -> str:
     combination += key
 
     return combination
+
+
+def toSymbol(text: str) -> str:
+    return _SYMBOL_MAP.get(text, text)
+
+
+_SYMBOL_MAP = {
+    "Comma": ",",
+    "Question": "?",
+    "Period": ".",
+    "Slash": "/",
+    "Semicolon": ";",
+    "Colon": ":",
+    "Less": "<",
+    "Greater": ">",
+    "Minus": "-",
+    "Equal": "=",
+    "Plus": "+",
+    "Underscore": "_",
+}

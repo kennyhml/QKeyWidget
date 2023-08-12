@@ -11,8 +11,8 @@ class QKeyWidget(QTextEdit):
     """Wrapper for a `QTextEdit` to make it's primary purpose to capture
     and display key combinations."""
 
-    def __init__(self, text=None, parent: Optional[QWidget] = None):
-        super().__init__(text, parent)
+    def __init__(self, parent: Optional[QWidget] = None):
+        super().__init__(parent)
         self.setCursorWidth(0)
         self.combination = "-"
         self.displayCombination()
@@ -50,7 +50,8 @@ def wrap(widget: QTextEdit) -> None:
     instance.
     """
     widget.setCursorWidth(0)
+    widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
     widget.displayCombination = QKeyWidget.displayCombination.__get__(widget, QTextEdit)  # type: ignore
     widget.keyPressEvent = QKeyWidget.keyPressEvent.__get__(widget, QTextEdit)  # type: ignore
-    widget.combination = "-" # type: ignore
-    widget.displayCombination()  # type: ignore
+    widget.combination = widget.toPlainText() # type: ignore
+    widget.displayCombination() # type: ignore
