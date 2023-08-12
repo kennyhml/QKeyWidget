@@ -8,31 +8,49 @@ from . import tools
 
 
 class QKeyWidget(QTextEdit):
+    """Wrapper for a `QTextEdit` to make it's primary purpose to capture
+    and display key combinations."""
+
     def __init__(self, text=None, parent: Optional[QWidget] = None):
         super().__init__(text, parent)
         self.setCursorWidth(0)
-        self.setText("-")
+        self.combination = "-"
+        self.displayCombination()
 
-    def keyPressEvent(self, event: QKeyEvent):
-        self.setText("")
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        """Captures the pressed sequence of keys and displays it in the widget."""
         key = Qt.Key(event.key())
-        key_name = key.name.split("_")[1]
+        keyName = key.name.split("_")[1]
 
-        mods = tools.extract_modifiers(event.modifiers())
-        if key_name in mods:
-            mods.remove(key_name)
+        # parses the captured event as it comes in mainly hard to display data
+        mods = tools.extractModifiers(event.modifiers())
+        self.combination = tools.stringifyCombination(mods, keyName)
+        self.displayCombination()
 
-        combination = ""
-        if mods:
-            combination += " + ".join(mods) if len(mods) > 1 else f"{mods[0]} + "
+    def displayCombination(self) -> None:
+        """Displays the combination"""
+        self.setText(self.combination)
 
-        combination += key_name
-        self.setText(combination)
-
-    def setText(self, text: str) -> None:
-        super().setText(text)
+        # align the text to the center of the `QTextEdit`
         cursor = self.textCursor()
-        block_format = QTextBlockFormat()
-        block_format.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        cursor.setBlockFormat(block_format)
+        blockFormat = QTextBlockFormat()
+        blockFormat.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cursor.setBlockFormat(blockFormat)
         self.setTextCursor(cursor)
+
+
+def wrap(widget: QTextEdit) -> None:
+    """Wraps an existing `QTextEdit` to give it the `QKeyWidget` functionality.
+    
+    This is done by creating bound methods to the instance using the methods of the 
+    `QKeyWidget` class.
+
+    In simpler terms, this will override the `keyPressEvent` method of the original `QTextEdit` widget 
+    with the custom implementation of the `QKeyWidget`, while still retaining the context of the widget 
+    instance.
+    """
+    widget.setCursorWidth(0)
+    widget.displayCombination = QKeyWidget.displayCombination.__get__(widget, QTextEdit)  # type: ignore
+    widget.keyPressEvent = QKeyWidget.keyPressEvent.__get__(widget, QTextEdit)  # type: ignore
+    widget.combination = "-" # type: ignore
+    widget.displayCombination()  # type: ignore

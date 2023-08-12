@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 
 
-def extract_modifiers(modifiers: Qt.KeyboardModifier) -> list[str]:
+def extractModifiers(modifiers: Qt.KeyboardModifier) -> list[str]:
     """Extracts the alt, shift and ctrl modifiers from a `KeyboardModifier` by using a bitmask.
 
     Returns them as an array of strings with the first letter capitalized.
@@ -18,7 +18,7 @@ def extract_modifiers(modifiers: Qt.KeyboardModifier) -> list[str]:
     return ret
 
 
-def stringify_combination(modifiers: list[str], key: str) -> str:
+def stringifyCombination(modifiers: list[str], key: str) -> str:
     """Stringifies a combination of modifiers and the pressed key.
 
     Examples:
