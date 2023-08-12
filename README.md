@@ -1,7 +1,7 @@
 # QKeyWidget
 QKeyWidget provides a wrapper for PySide's `QTextEdit` (created as a wrapped instance or wrapped around an existing instance).
 
-This wrapper aims to turn the widget into one that is useful to set key combinations by simply focusing the widget and entering pressing the combination.
+This wrapper aims to turn the widget into one that is useful to set key combinations by simply focusing the widget and pressing the combination.
 
 ## An example of how that might look:
 
