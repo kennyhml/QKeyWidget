@@ -51,6 +51,7 @@ def stringifyCombination(modifiers: list[str], key: str) -> str:
 
 
 def toSymbol(text: str) -> str:
+    """Turns a word into a symbol, for example 'Comma' >>> ','"""
     return _SYMBOL_MAP.get(text, text)
 
 
