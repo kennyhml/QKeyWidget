@@ -42,7 +42,9 @@ def stringifyCombination(modifiers: list[str], key: str) -> str:
 
     combination = ""
     if modifiers:
-        mods = (" + ".join(modifiers) if len(modifiers) > 1 else f"{modifiers[0]}" )+ ' + '
+        mods = (
+            " + ".join(modifiers) if len(modifiers) > 1 else f"{modifiers[0]}"
+        ) + " + "
         combination += mods
 
     combination += key
@@ -68,4 +70,5 @@ _SYMBOL_MAP = {
     "Equal": "=",
     "Plus": "+",
     "Underscore": "_",
+    "quoteleft": "'",
 }
