@@ -70,5 +70,6 @@ _SYMBOL_MAP = {
     "Equal": "=",
     "Plus": "+",
     "Underscore": "_",
-    "quoteleft": "'",
+    "QuoteLeft": "`",
+    "Apostrophe": "'",
 }
